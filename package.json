@@ -3,16 +3,20 @@
   "version": "0.1.0",
   "main": "apps/api/index.ts",
   "scripts": {
-    "dev:api": "ts-node apps/api/index.ts"
+    "dev:api": "ts-node -r dotenv/config apps/api/index.ts"
   },
   "license": "MIT",
-  "devDependencies": {
-    "@types/express": "^5.0.2",
-    "@types/node": "^22.15.29",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
-  },
   "dependencies": {
-    "express": "^5.1.0"
+    "dotenv": "^10.0.0",
+    "express": "^4.x",
+    "stripe": "^11.x"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.x",
+    "@types/express": "^4.x",
+    "@types/node": "^14.x",
+    "@types/stripe": "^8.x",
+    "ts-node": "^10.x",
+    "typescript": "^4.x"
   }
 }
