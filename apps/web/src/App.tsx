@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import axios from "axios";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+const [isLoading, setIsLoading] = useState(false);
+const [error, setError] = useState<string | null>(null);
+
+const handlePayCLick = async () => {
+  setIsLoading(true);
+  setError(null);
+try {
+  const response = await axios.post("http://localhost:3000/checkout", {
+  amount: 300,
+});
+const { url } = response.data;
+if (url) {
+  window.location.href = url;
+} else {
+  throw new Error("No URL returned from backend");
+}
+} catch (err: any) {
+  console.error(err);
+  setError(err.message || "An error occured");
+} finally {
+  setIsLoading(false);
+}
+};
+
+return (
+  
+  <div style={{ padding: "2rem", textAlign: "center"}}>
+  <h1>TipJar</h1>
+  <button onClick={handlePayCLick} disabled = {isLoading}>
+    {isLoading ? 'Processing...' : 'Checkout'}
+  </button>
+  {error && <p className="error">Error: {error}</p>}
+  </div>
+);
 }
 
-export default App
