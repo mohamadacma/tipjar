@@ -10,7 +10,7 @@ export default function Checkout() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await axios.post("http://localhost:3000/checkout", {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/checkout`, {
         amount: tipAmount,
       });
       const { url } = response.data;
@@ -54,7 +54,7 @@ export default function Checkout() {
       >
         <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>💸 TipJar</h1>
         <p style={{ marginBottom: "1rem", color: "#ccc" }}>
-          Leave a tip to support the creator.
+          You're awesome. Thanks!
         </p>
   
         <input

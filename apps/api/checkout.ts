@@ -1,4 +1,5 @@
-import express, { Request, Response, NextFunction } from "express";
+import { VercelRequest, VercelResponse } from "@vercel/node";
+
 import Stripe from "stripe";
 import { config } from "dotenv";
 
@@ -7,14 +8,13 @@ config();
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 if (!stripeSecretKey) throw new Error("Missing STRIPE_SECRET_KEY");
 const stripe = new Stripe(stripeSecretKey, { apiVersion: "2022-11-15" });
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  if (req.method !== "POST") {
+    res.status(405).json({ error: "Method not allowed" });
+    return;
+  }
 
-const router = express.Router();
-
-interface CheckoutBody { amount: number }
-router.use(express.json());
-
-router.post("/", async (req: Request<{}, any, CheckoutBody>, res: Response, next: NextFunction): Promise<void> => {
-  const { amount } = req.body;
+  const { amount } = req.body as { amount?: number };
 
   if (!amount || typeof amount !== "number" || amount <= 0) {
     res.status(400).json({ error: "Invalid 'amount' parameter" });
@@ -42,6 +42,5 @@ router.post("/", async (req: Request<{}, any, CheckoutBody>, res: Response, next
     console.error("Error creating Stripe checkout session:", err);
     res.status(500).json({ error: "Internal server error", details: err.message });
   }
-});
+};
 
-export default router;
