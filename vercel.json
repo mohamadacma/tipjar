@@ -1,13 +1,13 @@
 {
     "functions": {
-      "api/**.ts": {
-        "runtime": "vercel-node@1.12.1"
+      "apps/api/api/checkout.ts": {
+        "runtime": "vercel-node@1.14.0"
       }
     },
     "routes": [
       {
         "src": "/api/checkout",
-        "dest": "apps/api/checkout.ts"
+        "dest": "apps/api/api/checkout.ts"
       }
     ]
   }
