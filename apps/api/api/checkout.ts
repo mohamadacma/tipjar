@@ -3,7 +3,6 @@ import { VercelRequest, VercelResponse } from "@vercel/node";
 import Stripe from "stripe";
 
 
-
 console.log("STRIPE_SECRET_KEY loaded:", !!process.env.STRIPE_SECRET_KEY);
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
