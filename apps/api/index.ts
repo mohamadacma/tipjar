@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import checkoutRouter from "./checkout";
+import checkoutRouter from "./api/checkout";
 
 const app  = express();
 const port = process.env.PORT || 3000;
