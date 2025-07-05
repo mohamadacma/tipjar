@@ -1,15 +1,14 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
 
 import Stripe from "stripe";
-import { config } from "dotenv";
 
-config();
+
 
 console.log("STRIPE_SECRET_KEY loaded:", !!process.env.STRIPE_SECRET_KEY);
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 if (!stripeSecretKey) throw new Error("Missing STRIPE_SECRET_KEY");
-const stripe = new Stripe(stripeSecretKey, { apiVersion: "2022-11-15" });
+const stripe = new Stripe(stripeSecretKey, { apiVersion: "2025-06-30.basil" });
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
     res.status(405).json({ error: "Method not allowed" });
