@@ -10,7 +10,7 @@ export default function Checkout() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/checkout`, {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/checkout`, {
         amount: tipAmount,
       });
       const { url } = response.data;
