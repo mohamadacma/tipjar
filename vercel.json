@@ -1,9 +1,10 @@
 {
-    "functions": {
-      "apps/api/api/checkout.ts": {
-        "runtime": "vercel-node@1.14.0"
+    "builds": [
+      {
+        "src": "apps/api/api/checkout.ts",
+        "use": "@vercel/node"
       }
-    },
+    ],
     "routes": [
       {
         "src": "/api/checkout",
