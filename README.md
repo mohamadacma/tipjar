@@ -2,7 +2,7 @@
 
 A minimal, fast web app that lets users send thank-you tips using Stripe Checkout. Built with a clean UI and deployed with secure backend integration--no user accounts, no fluff.
 
-## 🚀 What It Does
+## What It Does
 TipJar lets users:
 - Enter an amount (in cents)
 - Click one button
