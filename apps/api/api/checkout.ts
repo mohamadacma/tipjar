@@ -3,10 +3,20 @@ import { VercelRequest, VercelResponse } from "@vercel/node";
 import Stripe from "stripe";
 
 
-
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+  // CORS headers
+  res.setHeader("Access-Control-Allow-Origin", "https://motipjar-web.vercel.app");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+   // Handle preflight request
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+  // debugging log
   console.log("STRIPE_SECRET_KEY loaded:", !!process.env.STRIPE_SECRET_KEY);
+
   if (!stripeSecretKey) throw new Error("Missing STRIPE_SECRET_KEY");
   if (req.method !== "POST") {
     res.status(405).json({ error: "Method not allowed" });
