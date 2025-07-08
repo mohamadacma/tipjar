@@ -6,7 +6,16 @@ import Stripe from "stripe";
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
   // CORS headers
-  res.setHeader("Access-Control-Allow-Origin", "https://motipjar-web.vercel.app");
+  const allowedOrigins = [
+    "https://motipjar-web.vercel.app",
+    "https://motipjar-24uhf2mu0--moes-projects-97e5bdff.vercel.app"
+  ];
+  
+  const origin = req.headers.origin || "";
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+  
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   res.setHeader("Access-Control-Allow-Credentials", "true");
