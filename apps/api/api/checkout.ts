@@ -33,7 +33,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
   const stripe = new Stripe(stripeSecretKey, { apiVersion: "2025-06-30.basil" });
 
-  const { amount } = req.body as { amount?: number };
+  const { amount, message } = req.body as { amount?: number, message};
+  console.log("message from Tipper", message);
 
   if (!amount || typeof amount !== "number" || amount <= 0) {
     res.status(400).json({ error: "Invalid 'amount' parameter" });
@@ -49,6 +50,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       mode: "payment",
       success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/cancel`,
+      metadata: {
+        message,
+      }
     });
 
     // Check if session.url exists
