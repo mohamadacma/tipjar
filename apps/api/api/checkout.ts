@@ -1,7 +1,5 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
-
 import Stripe from "stripe";
-
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
@@ -39,6 +37,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!amount || typeof amount !== "number" || amount <= 0) {
     res.status(400).json({ error: "Invalid 'amount' parameter" });
     return;
+    
   }
 
   const baseUrl = process.env.BASE_URL || "http://localhost:3000";
