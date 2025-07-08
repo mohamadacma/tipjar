@@ -5,6 +5,7 @@ export default function Checkout() {
   const [tipAmount, setTipAmount] = useState(700);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState("");
 
   const handlePayClick = async () => {
     setIsLoading(true);
@@ -12,6 +13,7 @@ export default function Checkout() {
     try {
       const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/checkout`, {
         amount: tipAmount,
+        message,
       });
       const { url } = response.data;
       if (url) {
@@ -73,6 +75,23 @@ export default function Checkout() {
             color: "#fff",
           }}
         />
+
+          <input 
+          type="text"
+          value= {message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder="Leave a message"
+          style={{
+            padding: "0.75em",
+            width: "100%",
+            marginBottom: "1rem",
+            borderRadius: "6px",
+            border: "1px solid #444", 
+            backgroundColor: "#333",
+            color: "#fff",
+          }}
+
+          />
   
         <button
           onClick={handlePayClick}
