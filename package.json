@@ -11,6 +11,7 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.x",
+    "micro": "^10.0.1",
     "stripe": "^11.x"
   },
   "devDependencies": {
