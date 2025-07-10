@@ -57,7 +57,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const session = event.data.object as Stripe.Checkout.Session;
       
       const amount = session.amount_total;
-      const message = session.metadata?.message || '';
+      const message: string = session.metadata?.message || '';
       
       if (amount) {
         await prisma.tip.create({

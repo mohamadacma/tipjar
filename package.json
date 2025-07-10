@@ -18,6 +18,7 @@
     "@types/cors": "^2.8.19",
     "@types/dotenv": "^8.x",
     "@types/express": "^4.x",
+    "@types/micro": "^10.0.0",
     "@types/node": "^14.x",
     "@types/stripe": "^8.x",
     "@vercel/node": "^5.3.2",
