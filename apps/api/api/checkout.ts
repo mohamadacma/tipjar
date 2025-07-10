@@ -1,6 +1,7 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
 import Stripe from "stripe";
 
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
   // CORS headers
@@ -29,10 +30,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.status(405).json({ error: "Method not allowed" });
     return;
   }
+  if (!req.body) {
+    res.status(400).json({ error: "Missing request body" });
+    return;
+  }
   const stripe = new Stripe(stripeSecretKey, { apiVersion: "2025-06-30.basil" });
 
-  const { amount, message } = req.body as { amount?: number, message};
-  console.log("message from Tipper", message);
+  const { amount, message } = req.body as { amount?: number, message?: string};
+  console.log("received amount", amount, "message from Tipper", message);
 
   if (!amount || typeof amount !== "number" || amount <= 0) {
     res.status(400).json({ error: "Invalid 'amount' parameter" });
@@ -50,8 +55,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/cancel`,
       metadata: {
-        message,
-      }
+        message: message || "",
+      },
     });
 
     // Check if session.url exists
